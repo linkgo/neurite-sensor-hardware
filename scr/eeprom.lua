@@ -7,7 +7,8 @@ for i=0,8,1 do
 end
 
 for i=0,8,1 do
-	print("read addr "..dev_addr.." reg "..i..": "..string.format("%02x", string.byte(i2c_read_reg(dev_addr, i))))
+	local data = string.format("%02x", string.byte(i2c_read_reg(dev_addr, i)))
+	print("read addr "..dev_addr.." reg "..i..": "..data)
 	tmr.delay(5000)
 end
 
@@ -19,6 +20,7 @@ for i=0,8,1 do
 end
 
 for i=0,8,1 do
-	print("read addr "..dev_addr.." reg "..i..": "..string.format("%02x", string.byte(i2c_read_reg(dev_addr, i))))
+	local data = string.format("%02x", string.byte(i2c_read_reg(dev_addr, i)))
+	print("read addr "..dev_addr.." reg "..i..": "..data)
 	tmr.delay(5000)
 end
