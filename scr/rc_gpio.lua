@@ -4,19 +4,14 @@ print("  [ok]")
 
 led_r = gpiomap[14]
 led_g = gpiomap[12]
-led_b = gpiomap[13]
+--led_b = gpiomap[13]
 
 gpio.mode(led_r, gpio.OUTPUT)
 gpio.write(led_r, gpio.LOW)
-tmr_delay(500000)
+tmr.delay(500000)
 gpio.write(led_r, gpio.HIGH)
 
 gpio.mode(led_g, gpio.OUTPUT)
 gpio.write(led_g, gpio.LOW)
-tmr_delay(500000)
+tmr.delay(500000)
 gpio.write(led_g, gpio.HIGH)
-
-gpio.mode(led_b, gpio.OUTPUT)
-gpio.write(led_b, gpio.LOW)
-tmr_delay(500000)
-gpio.write(led_b, gpio.HIGH)
