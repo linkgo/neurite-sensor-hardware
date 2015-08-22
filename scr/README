@@ -1,0 +1,30 @@
+README
+======
+
+Upload Scripts
+--------------
+
+1.  Flash the latest NodeMCU firmware with esptool.py, can be found here:
+    https://github.com/pfalcon/esptool/blob/master/esptool.py
+
+    $ esptool.py --port $UART_PORT write_flash 0x0 $BIN_FILE
+
+e.g.
+    $ esptool.py --port /dev/cu.usbserial-00001014 write_flash 0x0 ~/Desktop/nodemcu_float_0.9.6-dev_20150704.bin
+
+2.  Upload init.lua to change default baudrate to 115200, with luatool.py, from:
+    https://github.com/nodemcu/nodemcu-firmware/blob/master/tools/esptool.py
+
+    $ uatool.py -b 9600 -p $UART_PORT -f $SOURCE -t $TARGET --verbose
+
+e.g.
+    $ uatool.py -b 9600 -p $UART_PORT -f init.lua -t init.lua --verbose
+
+3. Reset board and upload all the scripts with 115200 baud, then reset again.
+
+    $ ./upload_all.sh
+
+Run Test
+--------
+
+    > dofile("test.lua")
