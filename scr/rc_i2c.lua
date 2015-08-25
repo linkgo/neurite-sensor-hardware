@@ -2,11 +2,11 @@ print("config i2c...")
 
 i2c_id = 0
 i2c_sda = gpiomap[9]
-scl = gpiomap[10]
+i2c_scl = gpiomap[10]
 
-print("i2c_id: "..i2c_id.." i2c_sda: "..i2c_sda.." scl: "..scl)
+print("i2c_id: "..i2c_id.." i2c_sda: "..i2c_sda.." i2c_scl: "..i2c_scl)
 
-i2c.setup(i2c_id, i2c_sda, scl, i2c.SLOW)
+i2c.setup(i2c_id, i2c_sda, i2c_scl, i2c.SLOW)
 
 function i2c_read_reg(dev_addr, reg_addr)
 	i2c.start(i2c_id)

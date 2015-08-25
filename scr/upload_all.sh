@@ -1,16 +1,24 @@
-!/bin/bash
+#!/bin/bash
 
-./upload.sh init.lua
-./upload.sh rc.lua
-./upload.sh rc_gpio.lua
-./upload.sh rc_i2c.lua
-./upload.sh rc_spi.lua
+port=$1
 
-./upload.sh bq.lua
-./upload.sh cat.lua
-./upload.sh eeprom.lua
-./upload.sh ls.lua
-./upload.sh lsap.lua
-./upload.sh tsl.lua
-./upload.sh bme.lua
-./upload.sh test.lua
+if [ exist$port = 'exist' ]; then
+	echo "port invalid, exit."
+	exit -1
+fi
+
+./upload.sh $port init.lua
+./upload.sh $port rc.lua
+./upload.sh $port rc_wifi.lua
+./upload.sh $port rc_gpio.lua
+./upload.sh $port rc_i2c.lua
+./upload.sh $port rc_spi.lua
+
+./upload.sh $port bq.lua
+./upload.sh $port cat.lua
+./upload.sh $port eeprom.lua
+./upload.sh $port ls.lua
+./upload.sh $port lsap.lua
+./upload.sh $port tsl.lua
+./upload.sh $port bme.lua
+./upload.sh $port test.lua

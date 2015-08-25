@@ -1,5 +1,11 @@
 #!/bin/bash
 
-file=$1
+port=$1
+file=$2
 
-luatool.py -b 115200 -p /dev/cu.usbserial-00001014 -f $1 -t $1 --verbose
+if [ ! -f "$file" -o exist$port = 'exist' ]; then
+	echo "arguments invalid, exit."
+	exit -1
+fi
+
+luatool.py -b 115200 -p $port -f $file -t $file --verbose
