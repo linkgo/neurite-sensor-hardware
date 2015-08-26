@@ -7,7 +7,6 @@ if [ exist$port = 'exist' ]; then
 	exit -1
 fi
 
-./upload.sh $port init.lua
 ./upload.sh $port rc.lua
 ./upload.sh $port rc_wifi.lua
 ./upload.sh $port rc_gpio.lua
