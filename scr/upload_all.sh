@@ -12,6 +12,7 @@ fi
 ./upload.sh $port rc_gpio.lua
 ./upload.sh $port rc_i2c.lua
 ./upload.sh $port rc_spi.lua
+./upload.sh $port rc_late.lua
 
 ./upload.sh $port bq.lua
 ./upload.sh $port but.lua

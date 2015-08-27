@@ -1,3 +1,5 @@
+print("button")
+
 local value = true
 local t = 0
 local dt = 0
@@ -29,3 +31,4 @@ tmr.alarm(6, 50, 1, function()
 		-- do nothing
 	end
 end)
+print("button [ok]")
