@@ -1,5 +1,3 @@
-print("tsl2561")
-
 local TSL2561_Control = 0x80
 local TSL2561_Timing = 0x81
 local TSL2561_Interrupt = 0x86
@@ -97,4 +95,3 @@ function M.readVisibleLux()
 end
 
 return M
-print("tsl2561 [ok]")
