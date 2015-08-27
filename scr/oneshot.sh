@@ -11,6 +11,6 @@ if [ n$port = 'n' ]; then
 	exit -1
 fi
 
-luatool.py -b 115200 -p $port -f init.lua -t init.lua --verbose -r
+luatool.py -b 9600 -p $port -f init.lua -t init.lua --verbose -r
 sleep 2
 ./upload_all.sh $port
