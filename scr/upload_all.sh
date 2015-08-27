@@ -14,6 +14,7 @@ fi
 ./upload.sh $port rc_spi.lua
 
 ./upload.sh $port bq.lua
+./upload.sh $port but.lua
 ./upload.sh $port cat.lua
 ./upload.sh $port eeprom.lua
 ./upload.sh $port ls.lua
