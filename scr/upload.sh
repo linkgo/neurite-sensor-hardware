@@ -13,4 +13,4 @@ if [ n$baud = 'n' ]; then
 	baud=115200
 fi
 
-luatool.py -b $baud -p $port -f $file -t $file --verbose
+luatool.py -b $baud -p $port -f $file -t $file

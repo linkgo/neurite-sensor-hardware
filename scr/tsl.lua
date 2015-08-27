@@ -1,2 +1,14 @@
-print("test tsl2561...")
-print("addr 0x29 reg 0x0a: "..string.format("%02x", string.byte(i2c_read_reg(0x29, 0x8a))))
+tmr.alarm(0, 500, 1, function()
+
+    -- init module
+    tsl2561 = require("tsl2561")
+    tsl2561.init(i2c_sda, i2c_scl)
+
+    -- read value
+    l = tsl2561.readVisibleLux()
+
+    -- release module
+    tsl2561 = nil
+    package.loaded["tsl2561"]=nil
+
+end)

@@ -18,6 +18,7 @@ fi
 ./upload.sh $port eeprom.lua
 ./upload.sh $port ls.lua
 ./upload.sh $port lsap.lua
+./upload.sh $port tsl2561.lua
 ./upload.sh $port tsl.lua
 ./upload.sh $port bme.lua
 ./upload.sh $port test.lua
