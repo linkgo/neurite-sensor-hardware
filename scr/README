@@ -12,17 +12,17 @@ Upload Scripts
 e.g.
     $ esptool.py --port /dev/cu.usbserial-00001014 write_flash 0x0 ~/Desktop/nodemcu_float_0.9.6-dev_20150704.bin
 
-2.  Upload init.lua to change default baudrate to 115200, with luatool.py, from:
-    https://github.com/4refr0nt/luatool/blob/master/luatool/luatool.py
+2.  Upload scripts with nodemcu-uploader.py, from:
+    https://github.com/kmpm/nodemcu-uploader.git
 
-    $ luatool.py -b 9600 -p $UART_PORT -f $SOURCE -t $TARGET --verbose
+    $ nodemcu-uploader.py --port $UART_PORT --baud $BAUD upload $FILE
 
 e.g.
-    $ luatool.py -b 9600 -p $UART_PORT -f init.lua -t init.lua --verbose
+    $ nodemcu-uploader.py --port /dev/ttyUSB0 --baud 115200 upload lsap.lua
 
-3. Reset board and upload all the scripts with 115200 baud, then reset again.
+    or uploading all the .lua files in one shot:
 
-    $ ./upload_all.sh
+    $ nodemcu-uploader.py --port /dev/ttyUSB0 --baud 115200 upload `find . -name \*.lua`
 
 Run Test
 --------
