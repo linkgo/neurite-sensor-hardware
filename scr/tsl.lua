@@ -1,4 +1,4 @@
-tmr.alarm(0, 500, 1, function()
+tmr.alarm(0, 5000, 1, function()
 
     -- init module
     tsl2561 = require("tsl2561")
