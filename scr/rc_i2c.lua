@@ -1,8 +1,8 @@
 print("config i2c...")
 
 i2c_id = 0
-i2c_sda = gpiomap[14]
-i2c_scl = gpiomap[12]
+i2c_sda = gpiomap[12]
+i2c_scl = gpiomap[14]
 
 print("i2c_id: "..i2c_id.." i2c_sda: "..i2c_sda.." i2c_scl: "..i2c_scl)
 
