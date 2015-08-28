@@ -22,7 +22,7 @@ e.g.
 
     or uploading all the .lua files in one shot:
 
-    $ nodemcu-uploader.py --port /dev/ttyUSB0 --baud 115200 upload `find . -name \*.lua`
+    $ nodemcu-uploader.py --port /dev/ttyUSB0 --baud 115200 upload `ls *.lua`
 
 Run Test
 --------
