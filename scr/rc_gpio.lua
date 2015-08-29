@@ -11,11 +11,8 @@ print("io_ledb: "..io_ledb)
 print("io_but: "..io_but)
 
 -- check button status
-
 local r = {[0] = 0, [1] = 0}
-
 flag_dsleep = 0
-
 print("checking button...")
 for i = 0, 1, 1 do
 	gpio.write(io_ledb, gpio.LOW)
@@ -30,4 +27,11 @@ if r[0] == 1 and r[1] == 1 then
 	flag_dsleep = 1
 else
 	print("button presssed, enter active")
+end
+
+-- config pwm for led
+pwm.setup(io_ledb, 100, 512)
+pwm.start(io_ledb)
+function led(duty)
+	pwm.setduty(io_ledb, duty)
 end
