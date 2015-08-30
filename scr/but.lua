@@ -9,10 +9,8 @@ local r_prev = 1
 function but_cb(dt)
 	value = not value
 	if value == false then
-		gpio.write(led_b, gpio.LOW)
 		print("low")
 	else
-		gpio.write(led_b, gpio.HIGH)
 		print("high")
 	end
 end
