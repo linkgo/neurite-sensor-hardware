@@ -33,10 +33,13 @@ collectgarbage()
 -- Connect to the WiFi access point.
 -- Once the device is connected, you may start the HTTP server.
 
+local retry = 0
+
 tmr.alarm(tmr_wifi, 3000, 1, function()
 	local ip = wifi.sta.getip()
 	if ip == nil then
 		print('Connecting to WiFi Access Point ...')
+		retry = retry + 1
 	else
 		print('IP: ',ip)
 		dofile("httpserver.lc")(80)
@@ -44,6 +47,7 @@ tmr.alarm(tmr_wifi, 3000, 1, function()
 		collectgarbage()
 		tmr.stop(tmr_wifi)
 	end
+	if retry > 5 then
+		dofile("sleep.lua")
+	end
 end)
-
---tmr.alarm(tmr_com, 100, 0, function() tmr.stop(tmr.wifi) end)
