@@ -1,7 +1,12 @@
 -- start breathing led
+pwm.setup(io_ledb, 100, 512)
+pwm.start(io_ledb)
+function led(duty)
+	pwm.setduty(io_ledb, duty)
+end
 local led_duty = 1023
 local led_state = 0
-tmr.alarm(4, 10, 1, function()
+tmr.alarm(tmr_led, 10, 1, function()
 	if led_duty > 1020 then
 		led_state = 1
 	elseif led_duty < 512 then
@@ -19,8 +24,12 @@ end)
 print("start normal work")
 print("job done")
 
-if flag_dsleep == 1 then
+if flag_dsleep == true then
 	print("enter dsleep in 3 sec, wake up after 60 sec")
-	tmr.stop(4)
-	tmr.alarm(5, 3000, 0, function() print("dsleep") node.dsleep(60000000) end)
+	tmr.alarm(tmr_pwr, 3000, 0, function()
+		print("finalize perifs")
+		tmr.stop(tmr_led)
+		print("dsleep")
+		node.dsleep(60000000)
+	end)
 end

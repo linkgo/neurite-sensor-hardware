@@ -1,5 +1,6 @@
 print("Hi linkgo.io!")
 
+dofile("rc_timer.lua")
 dofile("rc_wifi.lua")
 dofile("rc_gpio.lua")
 dofile("rc_i2c.lua")

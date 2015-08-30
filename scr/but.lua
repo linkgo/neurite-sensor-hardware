@@ -17,7 +17,7 @@ function but_cb(dt)
 	end
 end
 
-tmr.alarm(6, 50, 1, function()
+tmr.alarm(tmr_but, 50, 1, function()
 	local r_curr = gpio.read(io_but)
 	if r_curr == 0 and r_prev == 1 then
 		t = tmr.now()
