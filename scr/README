@@ -24,6 +24,10 @@ e.g.
 
     $ nodemcu-uploader.py --port /dev/ttyUSB0 --baud 115200 upload `ls *.lua`
 
+Ps:
+    Alternatively, we can also use luatool.py for single file upload:
+    $ luatool.py -p /dev/cu.usbserial-A503TUYM -b 115200 -f work.lua -t work.lua
+
 Run Test
 --------
 
