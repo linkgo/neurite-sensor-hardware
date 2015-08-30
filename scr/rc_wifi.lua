@@ -8,12 +8,12 @@ local wifiConfig = {}
 wifiConfig.mode = wifi.STATIONAP  -- both station and access point
 
 wifiConfig.accessPointConfig = {}
-wifiConfig.accessPointConfig.ssid = "ESP-"..node.chipid()   -- Name of the SSID you want to create
-wifiConfig.accessPointConfig.pwd = "ESP-"..node.chipid()    -- WiFi password - at least 8 characters
+wifiConfig.accessPointConfig.ssid = "ESP-"..node.chipid()
+wifiConfig.accessPointConfig.pwd = "ESP-"..node.chipid()
 
 wifiConfig.stationPointConfig = {}
-wifiConfig.stationPointConfig.ssid = "nubial"               -- Name of the WiFi network you want to join
-wifiConfig.stationPointConfig.pwd =  "basicbox565"          -- Password for the WiFi network
+wifiConfig.stationPointConfig.ssid = "linkgo"
+wifiConfig.stationPointConfig.pwd =  "startrock"
 
 -- Tell the chip to connect to the access point
 
@@ -36,18 +36,16 @@ collectgarbage()
 local retry = 0
 
 tmr.alarm(tmr_wifi, 3000, 1, function()
-	local ip = wifi.sta.getip()
-	if ip == nil then
-		print('Connecting to WiFi Access Point ...')
+	local sta_ip = wifi.sta.getip()
+	local ap_ip = wifi.ap.getip()
+	if sta_ip == nil and retry < 5 then
+		print('Connecting to AP...')
 		retry = retry + 1
 	else
-		print('IP: ',ip)
-		dofile("httpserver.lc")(80)
-		local server_up = true
+		print('STA IP: ', sta_ip)
+		print('AP IP: ', ap_ip)
+		dofile('httpserver.lc')(80)
 		collectgarbage()
 		tmr.stop(tmr_wifi)
-	end
-	if retry > 5 then
-		dofile("sleep.lua")
 	end
 end)
