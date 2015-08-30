@@ -24,12 +24,4 @@ end)
 print("start normal work")
 print("job done")
 
-if flag_dsleep == true then
-	print("enter dsleep in 3 sec, wake up after 60 sec")
-	tmr.alarm(tmr_pwr, 3000, 0, function()
-		print("finalize perifs")
-		tmr.stop(tmr_led)
-		print("dsleep")
-		node.dsleep(60000000)
-	end)
-end
+-- dofile("sleep.lua")
