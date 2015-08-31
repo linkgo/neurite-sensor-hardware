@@ -17,5 +17,5 @@ if flag_dsleep == false then
 		end
 	end)
 else
-	dofile("sleep.lc")
+	dofile("sleep.lc")(3000, 60000)
 end

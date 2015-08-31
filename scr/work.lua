@@ -19,4 +19,4 @@ end)
 print("wifi ready, start rock")
 print("job done")
 
--- dofile("sleep.lua")
+-- dofile("sleep.lc")(3000, 60000)
