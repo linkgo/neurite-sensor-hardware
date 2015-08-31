@@ -85,7 +85,7 @@ function setup_server()
 				file.close()
 				node.compile("config.lua")
 				--file.remove("config.lua")
-				local str_done = "<h1>Jolly good config, restart in 3 seconds!</h>"
+				local str_done = "<h1>Jolly good config, restart in 3 seconds!</h1>"
 				client:send(str_done);
 				dofile("cat.lc")('config.lua')
 				tmr.delay(3000000)
