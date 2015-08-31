@@ -21,10 +21,15 @@ if file.open("config.lc") then
 	wifi.sta.connect()
 
 	local ledon = false
-	tmr.alarm(tmr_wifi, 500, 1, function()
+	tmr.alarm(tmr_wifi, 50, 1, function()
 		if wifi.sta.getip() == nil then
 			ledon = not ledon
-			print("IP unavailable, waiting..."..ledon)
+			if ledon == false then
+				led(1023)
+			else
+				led(512)
+			end
+			print("connecting...")
 		else
 			tmr.stop(tmr_wifi)
 			print(ssid.." Connected, IP: "..wifi.sta.getip())

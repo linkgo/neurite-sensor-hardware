@@ -85,11 +85,12 @@ function setup_server()
 				file.close()
 				node.compile("config.lua")
 				--file.remove("config.lua")
-				client:send(buf);
+				local str_done = "<h1>Jolly good config, restart in 3 seconds!</h>"
+				client:send(str_done);
 				dofile("cat.lc")('config.lua')
-				print("config saved")
-				print("please reset")
-				--node.restart();
+				tmr.delay(3000000)
+				print(str_done);
+				node.restart();
 			end
 
 			payloadLen = string.len(buf)

@@ -20,9 +20,9 @@ e.g.
 e.g.
     $ nodemcu-uploader.py --port /dev/ttyUSB0 --baud 115200 upload lsap.lua
 
-    or uploading all the .lua files in one shot:
+    or uploading all the files in one shot:
 
-    $ nodemcu-uploader.py --port /dev/ttyUSB0 --baud 115200 upload `ls *.lua`
+    $ nodemcu-uploader.py --port /dev/ttyUSB0 --baud 115200 upload `ls *.lua` `ls http/*`
 
 Ps:
     Alternatively, we can also use luatool.py for single file upload:
