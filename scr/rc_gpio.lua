@@ -18,14 +18,27 @@ print("io_but: "..io_but)
 -- check button status
 local r = 0
 flag_dsleep = false
+
 print("check button in 0.5s")
 gpio.write(io_ledb, gpio.LOW)
 tmr.delay(500000)
 gpio.write(io_ledb, gpio.HIGH)
 r = gpio.read(io_but)
-if r == 1 then
-	print("no button press, sleep soon")
-	flag_dsleep = true
-else
-	print("button presssed, active mode")
+
+if file.open("config_boot.lc") then
+	file.close("config_boot.lc")
+	dofile("config_boot.lc")
 end
+
+file.remove("config_boot.lua")
+file.remove("config_boot.lc")
+file.open("config_boot.lua", "w")
+if r == 1 then
+	print("no button press, dsleep: "..tostring(flag_dsleep))
+else
+	flag_dsleep = not flag_dsleep
+	print("button presssed, dsleep: "..tostring(flag_dsleep))
+end
+file.writeline('flag_dsleep = '..tostring(flag_dsleep))
+file.close()
+node.compile("config_boot.lua")

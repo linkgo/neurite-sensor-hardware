@@ -1,17 +1,16 @@
 print("# config wifi")
 
-flag_config = false
+print("sta mac:  "..wifi.sta.getmac())
+print("ap mac:   "..wifi.ap.getmac())
+print("chip:     "..node.chipid())
+print("heap:     "..node.heap())
+print("mem used: "..collectgarbage('count'))
+
 flag_wifi = false
 local timeout = 5000
 
-print('sta mac: ',wifi.sta.getmac())
-print('ap mac: ',wifi.ap.getmac())
-print('chip: ',node.chipid())
-print('heap: ',node.heap())
-
 if file.open("config.lc") then
 	file.close()
-	flag_config = true
 	print("config exists")
 	dofile("cat.lc")("config.lua")
 	collectgarbage()
@@ -45,7 +44,6 @@ if file.open("config.lc") then
 		end
 	end)
 else
-	flag_config = false
 	print("no config, start softap")
 	collectgarbage()
 	dofile("run_config.lc")
