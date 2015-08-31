@@ -26,6 +26,7 @@ local files = {
 	'run_config.lua',
 	'sleep.lua',
 	'tsl2561.lua',
+	'tsl_getlux.lua',
 	'work.lua',
 }
 
