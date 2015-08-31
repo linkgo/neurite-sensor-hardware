@@ -1,6 +1,8 @@
 print("Hi linkgo.io!")
 
+-- comment out this line to save time once files have been compiled
 dofile("rc_compile.lua")
+
 dofile("rc_timer.lc")
 dofile("rc_gpio.lc")
 dofile("rc_i2c.lc")
