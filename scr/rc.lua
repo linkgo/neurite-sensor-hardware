@@ -1,14 +1,14 @@
 print("Hi linkgo.io!")
 
 dofile("rc_compile.lua")
-dofile("rc_timer.lua")
-dofile("rc_gpio.lua")
-dofile("rc_i2c.lua")
-dofile("tsl2561.lua")
---dofile("but.lua")
+dofile("rc_timer.lc")
+dofile("rc_gpio.lc")
+dofile("rc_i2c.lc")
+dofile("tsl2561.lc")
+--dofile("but.lc")
 if flag_dsleep == false then
-	dofile("rc_wifi.lua")
-	dofile("work.lua")
+	dofile("rc_wifi.lc")
+	dofile("work.lc")
 else
-	dofile("sleep.lua")
+	dofile("sleep.lc")
 end

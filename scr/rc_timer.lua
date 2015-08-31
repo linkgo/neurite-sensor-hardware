@@ -1,5 +1,6 @@
-print("assign timer")
+print("# assign timers")
 tmr_com = 0
+tmr_work = 2
 tmr_wifi = 3
 tmr_led = 4
 tmr_pwr = 5

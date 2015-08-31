@@ -1,51 +1,47 @@
--- Begin WiFi configuration
+print("# config wifi")
 
-local wifiConfig = {}
+flag_config = false
+flag_wifi = false
+local timeout = 5000
 
--- wifi.STATION         -- station: join a WiFi network
--- wifi.AP              -- access point: create a WiFi network
--- wifi.wifi.STATIONAP  -- both station and access point
-wifiConfig.mode = wifi.STATIONAP  -- both station and access point
-
-wifiConfig.accessPointConfig = {}
-wifiConfig.accessPointConfig.ssid = "ESP-"..node.chipid()
-wifiConfig.accessPointConfig.pwd = "ESP-"..node.chipid()
-
-wifiConfig.stationPointConfig = {}
-wifiConfig.stationPointConfig.ssid = "linkgo"
-wifiConfig.stationPointConfig.pwd =  "startrock"
-
--- Tell the chip to connect to the access point
-
-wifi.setmode(wifiConfig.mode)
-print('set (mode='..wifi.getmode()..')')
-print('MAC: ',wifi.sta.getmac())
+print('sta mac: ',wifi.sta.getmac())
+print('ap mac: ',wifi.ap.getmac())
 print('chip: ',node.chipid())
 print('heap: ',node.heap())
 
-wifi.ap.config(wifiConfig.accessPointConfig)
-wifi.sta.config(wifiConfig.stationPointConfig.ssid, wifiConfig.stationPointConfig.pwd)
-wifiConfig = nil
-collectgarbage()
+if file.open("config.lc") then
+	file.close()
+	flag_config = true
+	print("config exists")
+	dofile("cat.lc")("config.lua")
+	collectgarbage()
+	dofile("config.lc")
+	wifi.setmode(wifi.STATION)
+	wifi.sta.config(ssid, password)
+	wifi.sta.connect()
 
--- End WiFi configuration
-
--- Connect to the WiFi access point.
--- Once the device is connected, you may start the HTTP server.
-
-local retry = 0
-
-tmr.alarm(tmr_wifi, 3000, 1, function()
-	local sta_ip = wifi.sta.getip()
-	local ap_ip = wifi.ap.getip()
-	if sta_ip == nil and retry < 5 then
-		print('Connecting to AP...')
-		retry = retry + 1
-	else
-		print('STA IP: ', sta_ip)
-		print('AP IP: ', ap_ip)
-		dofile('httpserver.lc')(80)
-		collectgarbage()
-		tmr.stop(tmr_wifi)
-	end
-end)
+	local ledon = false
+	tmr.alarm(tmr_wifi, 500, 1, function()
+		if wifi.sta.getip() == nil then
+			ledon = not ledon
+			print("IP unavailable, waiting..."..ledon)
+		else
+			tmr.stop(tmr_wifi)
+			print(ssid.." Connected, IP: "..wifi.sta.getip())
+			flag_wifi = true
+		end
+	end)
+	tmr.alarm(tmr_com, timeout, 0, function()
+		if flag_wifi == false then
+			tmr.stop(tmr_wifi)
+			print("fail to connect, start softap")
+			collectgarbage()
+			dofile("run_config.lc")
+		end
+	end)
+else
+	flag_config = false
+	print("no config, start softap")
+	collectgarbage()
+	dofile("run_config.lc")
+end

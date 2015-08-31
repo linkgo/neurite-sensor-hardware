@@ -1,7 +1,9 @@
+print("# check compile")
+
 -- Compile server code and remove original .lua files.
 -- This only happens the first time afer the .lua files are uploaded.
 
-local compileAndRemoveIfNeeded = function(f)
+local check_compile = function(f)
 	if file.open(f) then
 		file.close()
 		print('Compiling:', f)
@@ -11,9 +13,24 @@ local compileAndRemoveIfNeeded = function(f)
 	end
 end
 
-local serverFiles = {'httpserver.lua', 'httpserver-basicauth.lua', 'httpserver-conf.lua', 'httpserver-b64decode.lua', 'httpserver-request.lua', 'httpserver-static.lua', 'httpserver-header.lua', 'httpserver-error.lua'}
-for i, f in ipairs(serverFiles) do compileAndRemoveIfNeeded(f) end
+local files = {
+	'but.lua',
+	'cat.lua',
+	'ls.lua',
+	'lsap.lua',
+	'rc_gpio.lua',
+	'rc_i2c.lua',
+	'rc.lua',
+	'rc_timer.lua',
+	'rc_wifi.lua',
+	'run_config.lua',
+	'sleep.lua',
+	'tsl2561.lua',
+	'work.lua',
+}
 
-compileAndRemoveIfNeeded = nil
-serverFiles = nil
+for i, f in ipairs(files) do check_compile(f) end
+
+check_compile = nil
+files = nil
 collectgarbage()

@@ -1,4 +1,4 @@
-print("config i2c...")
+print("# config i2c")
 
 i2c_id = 0
 i2c_sda = gpiomap[12]
@@ -27,5 +27,3 @@ function i2c_write_reg(dev_addr, reg_addr, reg_val)
 	i2c.write(i2c_id, reg_val)
 	i2c.stop(i2c_id)
 end
-
-print("  [ok]")

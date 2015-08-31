@@ -1,9 +1,4 @@
 -- start breathing led
-pwm.setup(io_ledb, 100, 512)
-pwm.start(io_ledb)
-function led(duty)
-	pwm.setduty(io_ledb, duty)
-end
 local led_duty = 1023
 local led_state = 0
 tmr.alarm(tmr_led, 50, 1, function()
@@ -21,7 +16,7 @@ tmr.alarm(tmr_led, 50, 1, function()
 	led(led_duty)
 end)
 
-print("start normal work")
+print("wifi ready, start rock")
 print("job done")
 
 -- dofile("sleep.lua")
