@@ -18,6 +18,7 @@ local files = {
 	'cat.lua',
 	'ls.lua',
 	'lsap.lua',
+	'rc_compile.lua',
 	'rc_gpio.lua',
 	'rc_i2c.lua',
 	'rc.lua',

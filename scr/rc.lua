@@ -1,14 +1,12 @@
 print("Hi linkgo.io!")
 
-if file.open('rc_compile.lua') then
-	file.close()
-	print('Compiling:', 'rc_compile.lua')
-	node.compile('rc_compile.lua')
-	file.remove('rc_compile.lua')
-	collectgarbage()
-end
 -- comment out this line to save time once files have been compiled
-dofile("rc_compile.lc")
+if file.open("rc_compile.lc") then
+	file.close()
+	s,err = pcall(function() dofile("rc_compile.lc") end)
+else
+	s,err = pcall(function() dofile("rc_compile.lua") end)
+end
 dofile("rc_timer.lc")
 dofile("rc_gpio.lc")
 dofile("rc_i2c.lc")
@@ -23,5 +21,7 @@ if flag_dsleep == false then
 		end
 	end)
 else
-	dofile("sleep.lc")(3000, 60000)
+	local t = wifi.sleeptype(wifi.LIGHT_SLEEP)
+	print("sleep type: "..t)
+	dofile("sleep.lc")(30000, 60000)
 end
