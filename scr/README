@@ -32,3 +32,40 @@ Run Test
 --------
 
     > dofile("test.lua")
+
+Working Modes
+-------------
+
+    ACTIVE: Normal working mode that act as STA or AP.
+            (e.g. exchange data with server and then sleep)
+
+    SLEEP:  Deep sleep at most times, waking up at intervals.
+            (e.g. sleep 1 min and wake up for 3 sec)
+
+    DEBUG:  Nothing runs, except for the lua prompt itself.
+
+    Since we are on battery all the time, we need the capability to
+switch among different modes according to one single user button,
+and keep the battery lasting as long as possible at the same time.
+
+    Thus, to achieve all three states ACTIVE, SLEEP and DEBUG, we
+designed this flow which can be described as:
+
+       Boot
+        |
+        v
+ button pressed? ---+
+      Y |         N |
+        v           |
+ toggle flag_dsleep |
+        |           |
+        + <---------+
+        |
+        v
+ flag_dsleep == false? ---+
+      Y |               N |
+        v                 v
+     ACTIVE        button pressed? ---+
+                        Y |         N |
+                          v           v
+                        DEBUG       SLEEP

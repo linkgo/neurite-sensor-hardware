@@ -21,7 +21,17 @@ if flag_dsleep == false then
 		end
 	end)
 else
-	local t = wifi.sleeptype(wifi.LIGHT_SLEEP)
-	print("sleep type: "..t)
-	dofile("sleep.lc")(30000, 60000)
+	local r = 0
+	print("check button in 0.5s, debug?")
+	led(512)
+	tmr.delay(500000)
+	led(1023)
+	r = gpio.read(io_but)
+	if r == 1 then
+		dofile("sleep.lc")(1000, 60000)
+	else
+		local t = wifi.sleeptype(wifi.LIGHT_SLEEP)
+		print("sleep type: "..t)
+		print("button presssed, debug mode")
+	end
 end
