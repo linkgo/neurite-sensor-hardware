@@ -30,8 +30,6 @@ else
 	if r == 1 then
 		dofile("sleep.lc")(1000, 60000)
 	else
-		local t = wifi.sleeptype(wifi.LIGHT_SLEEP)
-		print("sleep type: "..t)
 		print("button presssed, debug mode")
 	end
 end

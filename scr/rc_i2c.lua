@@ -17,7 +17,7 @@ function i2c_read_reg(dev_addr, reg_addr)
 	i2c.address(i2c_id, dev_addr, i2c.RECEIVER)
 	local c = i2c.read(i2c_id, 1)
 	i2c.stop(i2c_id)
-	return c
+	return string.byte(c)
 end
 
 function i2c_write_reg(dev_addr, reg_addr, reg_val)

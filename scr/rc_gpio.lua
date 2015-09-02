@@ -15,10 +15,10 @@ print("io_ledb: "..io_ledb)
 print("io_but: "..io_but)
 
 -- check button status
-local r = 0
 flag_dsleep = false
 
-print("check button in 0.5s")
+local r = 0
+print("check button in 0.5s, sleep/active?")
 led(512)
 tmr.delay(500000)
 led(1023)
