@@ -26,6 +26,7 @@ local files = {
 	'rc_wifi.lua',
 	'run_config.lua',
 	'sleep.lua',
+	'telnet.lua',
 	'tsl_getlux.lua',
 	'work.lua',
 }

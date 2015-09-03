@@ -30,6 +30,7 @@ function getlux()
 end
 
 print("wifi ready, start rock")
+dofile('telnet.lc')
 --print("get lux: "..getlux())
 print("job done")
 
