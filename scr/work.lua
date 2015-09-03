@@ -16,19 +16,6 @@ tmr.alarm(tmr_led, 50, 1, function()
 	led(led_duty)
 end)
 
-function getlux()
-	local tsl2561 = require("tsl2561")
-	tsl2561.init(i2c_sda, i2c_scl)
-
-	local l = tsl2561.readVisibleLux()
-	print("lux: "..l.." lx")
-
-	tsl2561 = nil
-	package.loaded["tsl2561"]=nil
-	collectgarbage()
-	return l
-end
-
 print("wifi ready, start rock")
 dofile('telnet.lc')
 --print("get lux: "..getlux())
