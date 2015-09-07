@@ -29,16 +29,6 @@ collectgarbage()
 print("heap:     "..node.heap())
 print("mem used: "..collectgarbage('count'))
 
-dofile("rc_i2c.lc")
-collectgarbage()
-print("heap:     "..node.heap())
-print("mem used: "..collectgarbage('count'))
-
-dofile("tsl2561.lc")
-collectgarbage()
-print("heap:     "..node.heap())
-print("mem used: "..collectgarbage('count'))
-
 --dofile("but.lc")
 collectgarbage()
 print("heap:     "..node.heap())

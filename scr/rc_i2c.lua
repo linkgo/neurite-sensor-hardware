@@ -11,23 +11,23 @@ i2c.setup(i2c_id, i2c_sda, i2c_scl, i2c.SLOW)
 -- Wrapping I2C functions to retain original calls
 Wire = {}
 function Wire.beginTransmission(ADDR)
-    i2c.start(id)
-    i2c.address(id, ADDR, i2c.TRANSMITTER)
+    i2c.start(i2c_id)
+    i2c.address(i2c_id, ADDR, i2c.TRANSMITTER)
 end
 
 function Wire.write(commands)
-    i2c.write(id, commands)
+    i2c.write(i2c_id, commands)
 end
 
 function Wire.endTransmission()
-    i2c.stop(id)
+    i2c.stop(i2c_id)
 end
 
 function Wire.requestFrom(ADDR, length)
-    i2c.start(id)
-    i2c.address(id, ADDR,i2c.RECEIVER)
-    c = i2c.read(id, length)
-    i2c.stop(id)
+    i2c.start(i2c_id)
+    i2c.address(i2c_id, ADDR,i2c.RECEIVER)
+    c = i2c.read(i2c_id, length)
+    i2c.stop(i2c_id)
     return string.byte(c)
 end
 

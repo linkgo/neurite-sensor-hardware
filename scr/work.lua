@@ -18,6 +18,12 @@ end)
 
 print("wifi ready, start rock")
 dofile('telnet.lc')
+
+dofile("rc_i2c.lc")
+collectgarbage()
+print("heap:     "..node.heap())
+print("mem used: "..collectgarbage('count'))
+
 --print("get lux: "..getlux())
 print("job done")
 

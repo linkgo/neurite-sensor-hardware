@@ -4,7 +4,7 @@ print("heap:     "..node.heap())
 print("mem used: "..collectgarbage('count'))
 
 flag_wifi = false
-local timeout = 5000
+local timeout = 10000
 
 if file.open("config.lc") then
 	file.close()
