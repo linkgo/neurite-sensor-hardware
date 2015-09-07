@@ -24,6 +24,7 @@ collectgarbage()
 print("heap:     "..node.heap())
 print("mem used: "..collectgarbage('count'))
 
+dofile('mqtt_job.lc')
 --print("get lux: "..getlux())
 print("job done")
 
