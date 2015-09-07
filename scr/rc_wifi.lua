@@ -1,8 +1,5 @@
 print("# config wifi")
 
-print("sta mac:  "..wifi.sta.getmac())
-print("ap mac:   "..wifi.ap.getmac())
-print("chip:     "..node.chipid())
 print("heap:     "..node.heap())
 print("mem used: "..collectgarbage('count'))
 

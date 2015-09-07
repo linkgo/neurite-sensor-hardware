@@ -8,22 +8,40 @@ print("i2c_id: "..i2c_id.." i2c_sda: "..i2c_sda.." i2c_scl: "..i2c_scl)
 
 i2c.setup(i2c_id, i2c_sda, i2c_scl, i2c.SLOW)
 
-function i2c_read_reg(dev_addr, reg_addr)
-	i2c.start(i2c_id)
-	i2c.address(i2c_id, dev_addr, i2c.TRANSMITTER)
-	i2c.write(i2c_id, reg_addr)
-	i2c.stop(i2c_id)
-	i2c.start(i2c_id)
-	i2c.address(i2c_id, dev_addr, i2c.RECEIVER)
-	local c = i2c.read(i2c_id, 1)
-	i2c.stop(i2c_id)
-	return string.byte(c)
+-- Wrapping I2C functions to retain original calls
+Wire = {}
+function Wire.beginTransmission(ADDR)
+    i2c.start(id)
+    i2c.address(id, ADDR, i2c.TRANSMITTER)
 end
 
-function i2c_write_reg(dev_addr, reg_addr, reg_val)
-	i2c.start(i2c_id)
-	i2c.address(i2c_id, dev_addr, i2c.TRANSMITTER)
-	i2c.write(i2c_id, reg_addr)
-	i2c.write(i2c_id, reg_val)
-	i2c.stop(i2c_id)
+function Wire.write(commands)
+    i2c.write(id, commands)
+end
+
+function Wire.endTransmission()
+    i2c.stop(id)
+end
+
+function Wire.requestFrom(ADDR, length)
+    i2c.start(id)
+    i2c.address(id, ADDR,i2c.RECEIVER)
+    c = i2c.read(id, length)
+    i2c.stop(id)
+    return string.byte(c)
+end
+
+function readRegister(deviceAddress, address)
+     Wire.beginTransmission(deviceAddress)
+     Wire.write(address)                -- register to read
+     Wire.endTransmission()
+     value = Wire.requestFrom(deviceAddress, 1) -- read a byte
+     return value
+end
+
+function writeRegister(deviceAddress, address, val)
+     Wire.beginTransmission(deviceAddress)  -- start transmission to device
+     Wire.write(address)                    -- send register address
+     Wire.write(val)                        -- send value to write
+     Wire.endTransmission()                 -- end transmission
 end

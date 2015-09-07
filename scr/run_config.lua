@@ -89,8 +89,8 @@ function setup_server()
 				client:send(str_done);
 				dofile("cat.lc")('config.lua')
 				tmr.delay(3000000)
-				print(str_done);
-				node.restart();
+				print(str_done)
+				node.restart()
 			end
 
 			payloadLen = string.len(buf)
