@@ -15,6 +15,7 @@ end
 
 local files = {
 	'but.lua',
+	'bq.lua',
 	'cat.lua',
 	'ls.lua',
 	'lsap.lua',

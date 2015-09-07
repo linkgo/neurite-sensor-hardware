@@ -12,9 +12,11 @@ s:listen(23,function(c)
       --like pcall(loadstring(l)), support multiple separate lines
     end)
     c:on("disconnection",function(c)
+      flag_telnet = false
       node.output(nil)
       --unregist redirect output function, output goes to serial
     end)
+    flag_telnet = true
     print("Telnet: esp-"..node.chipid())
 end)
 print("telnet server started")

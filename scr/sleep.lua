@@ -6,7 +6,7 @@ return function(t_in, t_out)
 		tmr.stop(tmr_wifi)
 		tmr.stop(tmr_led)
 		tmr.stop(tmr_but)
-		print("dsleep")
+		print("alive for "..string.format("%.3f", tmr.now()/1000000).." secs in total, dsleep now")
 		node.dsleep(t_out*1000)
 	end)
 end

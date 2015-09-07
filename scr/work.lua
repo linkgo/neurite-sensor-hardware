@@ -17,15 +17,30 @@ tmr.alarm(tmr_led, 50, 1, function()
 end)
 
 print("wifi ready, start rock")
+flag_telnet = false
+flag_jobdone = false
 dofile('telnet.lc')
-
 dofile("rc_i2c.lc")
+dofile('bq.lc')
 collectgarbage()
 print("heap:     "..node.heap())
 print("mem used: "..collectgarbage('count'))
 
+-- put regular job here
 dofile('mqtt_job.lc')
---print("get lux: "..getlux())
-print("job done")
 
--- dofile("sleep.lc")(3000, 60000)
+local cnt = 0
+tmr.alarm(tmr_com, 1000, 1, function()
+	cnt = cnt + 1
+	if flag_jobdone == true or cnt >= 30 then
+		tmr.stop(tmr_com)
+		if flag_jobdone == false then
+			print("warining: sleep without job done!")
+		end
+		if flag_telnet == true then
+			print("telnet connected, ignore sleep")
+		else
+			dofile("sleep.lc")(1000, 60000)
+		end
+	end
+end)

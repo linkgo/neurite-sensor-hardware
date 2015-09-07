@@ -14,25 +14,11 @@ if file.open('rc_compile.lua') then
 end
 -- comment out this line to save time once files have been compiled
 dofile("rc_compile.lc")
-collectgarbage()
-
-print("heap:     "..node.heap())
-print("mem used: "..collectgarbage('count'))
-
 dofile("rc_timer.lc")
-collectgarbage()
-print("heap:     "..node.heap())
-print("mem used: "..collectgarbage('count'))
-
 dofile("rc_gpio.lc")
-collectgarbage()
-print("heap:     "..node.heap())
-print("mem used: "..collectgarbage('count'))
 
 --dofile("but.lc")
 collectgarbage()
-print("heap:     "..node.heap())
-print("mem used: "..collectgarbage('count'))
 
 local r = 0
 print("check button in 0.5s, debug?")
