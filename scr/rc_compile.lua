@@ -15,12 +15,10 @@ end
 
 local files = {
 	'but.lua',
-	'bq.lua',
 	'cat.lua',
 	'ls.lua',
 	'lsap.lua',
 	'mqtt_job.lua',
-	'mqtt_pub.lua',
 	'rc_gpio.lua',
 	'rc_i2c.lua',
 	'rc.lua',

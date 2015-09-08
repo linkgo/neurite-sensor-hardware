@@ -13,7 +13,9 @@ if file.open('rc_compile.lua') then
 	collectgarbage()
 end
 -- comment out this line to save time once files have been compiled
-dofile("rc_compile.lc")
+if file.open('rc_compile.lc') then
+	dofile("rc_compile.lc")
+end
 dofile("rc_timer.lc")
 dofile("rc_gpio.lc")
 

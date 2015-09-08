@@ -1,4 +1,4 @@
-l = file.list()
-for k,v in pairs(l) do
-  print("name: "..k..", size: "..v)
+local l = file.list()
+for k, v in pairs(l) do
+	print("name: "..k..", size: "..v)
 end

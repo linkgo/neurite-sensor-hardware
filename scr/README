@@ -22,7 +22,7 @@ e.g.
 
     or uploading all the files in one shot:
 
-    $ nodemcu-uploader.py --port /dev/ttyUSB0 --baud 115200 upload `ls *.lua` `ls *.lc` `ls http/*`
+    $ nodemcu-uploader.py --port /dev/ttyUSB0 --baud 115200 upload `ls *.lua` `ls http/*`
 
 Ps:
     Alternatively, we can also use luatool.py for single file upload:

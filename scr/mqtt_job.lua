@@ -1,5 +1,29 @@
 print("start mqtt job")
 
+-- power
+--local RS = 20
+local ac = (256 * readRegister(0x55, 0x15) + readRegister(0x55, 0x14)) * 3.57 / 20
+local volt = 256 * readRegister(0x55, 0x09) + readRegister(0x55, 0x08)
+local temp = 0.25 * (256 * readRegister(0x55, 0x07) + readRegister(0x55, 0x06)) - 273.15
+local sae = (256 * readRegister(0x55, 0x23) + readRegister(0x55, 0x22)) * 29.2 / 20
+local tte = 256 * readRegister(0x55, 0x17) + readRegister(0x55, 0x16)
+--print("average current in 5.12 sec: "..ac.." mA")
+--print("battery voltage in 2.56 sec: "..volt.." mV")
+--print("temperature in 2.56 sec: "..temp.." C")
+--print("available entergy: "..sae.." mWh")
+--print("time to empty: "..tte.." minutes")
+
+-- light
+tsl2561 = require("tsl2561")
+tsl2561.init()
+local ch0, ch1 = tsl2561.readRaw()
+tsl2561 = nil
+package.loaded["tsl2561"] = nil
+collectgarbage()
+
+print("prepare data finished")
+
+-- mqtt things
 local MQTT_ID         = "esp-"..node.chipid()
 local TOPIC_SUB       = "/down/neuron/"..MQTT_ID.."/#"
 local TOPIC_CHECKIN   = "/up/checkin/neuron"
@@ -7,19 +31,8 @@ local TOPIC_FINISH    = "/up/finish/neuron"
 local TOPIC_PUB_LIGHT = "/up/neuron/"..MQTT_ID.."/light"
 local TOPIC_PUB_POWER = "/up/neuron/"..MQTT_ID.."/power"
 
--- It needs to define as many as the number of publishing jobs.
--- Necessary for confirming all the jobs done.
--- Holy bad idea since I don't know how to sync among callbacks.
 local putack_sum = 0
 local PUTACK_MAX = 3
-local putack_result = true
-local putack = {
-	checkin = false,
-	light = false,
-	power = false,
-}
-
-local sem_mqtt = false
 
 m = mqtt.Client(MQTT_ID, 120, nil, nil)
 
@@ -37,69 +50,33 @@ m:on("message", function(conn, topic, data)
 	end
 end)
 
--- FIXME Async!!! This function can't be used, or reentrant will be a hard rock.
--- I don't know how to handle this yet.
--- For now, publish cannot be done one by one in order.
 local function do_mqttpub(topic, msg)
 	m:publish(topic, msg, 0, 0, function(conn)
-		print("["..string.format("%8.3f", tmr.now()/1000000).."] > "..topic..": "..msg)
-	end)
-end
-
-local function mqttpub_light()
-	tsl2561 = require("tsl2561")
-	tsl2561.init()
-	local ch0, ch1 = tsl2561.readRaw()
-	tsl2561 = nil
-	package.loaded["tsl2561"] = nil
-	collectgarbage()
-	m:publish(TOPIC_PUB_LIGHT, ch0.." "..ch1, 0, 0, function(conn)
-		putack.light = true
 		putack_sum = putack_sum + 1
-		print("["..string.format("%8.3f", tmr.now()/1000000).."] > "..TOPIC_PUB_LIGHT..": "..MQTT_ID)
-	end)
-end
-
-local function mqttpub_power()
-	local ac, volt, temp, sae, tte = bq_read()
-	m:publish(TOPIC_PUB_POWER, ac.." "..volt.." "..temp.." "..sae.." "..tte, 0, 0, function(conn)
-		putack.power = true
-		putack_sum = putack_sum + 1
-		print("["..string.format("%8.3f", tmr.now()/1000000).."] > "..TOPIC_PUB_POWER..": "..ac.." "..volt.." "..temp.." "..sae.." "..tte)
+		print("["..string.format("%8.3f", tmr.now()/1000000).."] published "..putack_sum)
 	end)
 end
 
 m:connect("123.57.208.39", 1883, 0, function(conn)
 	print("connected")
 
-	m:publish(TOPIC_CHECKIN, MQTT_ID, 0, 0, function(conn)
-		putack.checkin = true
-		putack_sum = putack_sum + 1
-		print("["..string.format("%8.3f", tmr.now()/1000000).."] > "..TOPIC_CHECKIN..": "..MQTT_ID)
-	end)
-	mqttpub_light()
-	mqttpub_power()
+	do_mqttpub(TOPIC_CHECKIN, MQTT_ID)
+	collectgarbage()
+	do_mqttpub(TOPIC_PUB_POWER, ac.." "..volt.." "..temp.." "..sae.." "..tte)
+	collectgarbage()
+	do_mqttpub(TOPIC_PUB_LIGHT, ch0.." "..ch1)
+	collectgarbage()
 
 	m:subscribe(TOPIC_SUB, 0, function(conn)
 		print("subscribe success")
 	end)
+	collectgarbage()
 end)
 
 tmr.alarm(tmr_work, 100, 1, function()
-	for k, v in pairs(putack) do
-		putack_result = putack_result and v
-	end
-	if putack_result == true or putack_sum >= PUTACK_MAX then
+	if putack_sum >= PUTACK_MAX then
 		flag_jobdone = true
 		tmr.stop(tmr_work)
-		tmr.stop(tmr_com1)
 		print("job done perfectly")
 	end
 end)
-
---tmr.alarm(tmr_com1, 5000, 1, function()
---	print("job status")
---	for k, v in pairs(putack) do
---		print(k, v)
---	end
---end)

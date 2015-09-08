@@ -2,16 +2,16 @@
 local led_duty = 1023
 local led_state = 0
 tmr.alarm(tmr_led, 50, 1, function()
-	if led_duty > 1010 then
+	if led_duty > 1000 then
 		led_state = 1
 	elseif led_duty < 512 then
 		led_state = 0
 	else
 	end
 	if led_state == 0 then
-		led_duty = led_duty + 10
+		led_duty = led_duty + 20
 	else
-		led_duty = led_duty - 10
+		led_duty = led_duty - 20
 	end
 	led(led_duty)
 end)
@@ -21,7 +21,6 @@ flag_telnet = false
 flag_jobdone = false
 dofile('telnet.lc')
 dofile("rc_i2c.lc")
-dofile('bq.lc')
 collectgarbage()
 print("heap:     "..node.heap())
 print("mem used: "..collectgarbage('count'))
@@ -40,7 +39,7 @@ tmr.alarm(tmr_com, 1000, 1, function()
 		if flag_telnet == true then
 			print("telnet connected, ignore sleep")
 		else
-			dofile("sleep.lc")(1000, 60000)
+			dofile("sleep.lc")(1000, 10000)
 		end
 	end
 end)
