@@ -1,5 +1,8 @@
 return function(f)
-	file.open(f, "r")
-	print(file.read(EOF))
-	file.close()
+	if file.open(f, "r") then
+		print(file.read(EOF))
+		file.close()
+	else
+		print("open failed")
+	end
 end

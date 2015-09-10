@@ -5,6 +5,9 @@ print("chip:     "..node.chipid())
 print("heap:     "..node.heap())
 print("mem used: "..collectgarbage('count'))
 
+flag_telnet = false
+flag_jobdone = false
+
 if file.open('rc_compile.lua') then
 	file.close()
 	print('Compiling:', 'rc_compile.lua')
@@ -40,25 +43,19 @@ if flag_dsleep == false then
 		if (flag_wifi == true) then
 			tmr.stop(tmr_work)
 			dofile('breath.lc')
-			collectgarbage("collect")
-			print("heap:     "..node.heap())
-			print("mem used: "..collectgarbage('count'))
-			flag_telnet = false
-			flag_jobdone = false
 			dofile('telnet.lc')
 			dofile("rc_i2c.lc")
-			dofile('sensor_power.lc')
-			dofile('sensor_light.lc')
-			print("<free/used>: "..node.heap().."/"..collectgarbage('count'))
+			--dofile('sensor_power.lc')
+			--dofile('sensor_light.lc')
+			--dofile('sensor_bme.lc')
 			dofile('mqtt_job.lc')
-			dofile('finish_job.lc')
 		end
 	end)
 else
 	if r == 1 then
-		--dofile("sleep.lc")(1000, 3600000)
-		dofile('but.lc')
+		dofile("sleep.lc")(1000, 3600000)
 	else
 		print("button presssed, debug mode")
+		dofile('but.lc')
 	end
 end

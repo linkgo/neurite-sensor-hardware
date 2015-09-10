@@ -15,7 +15,6 @@ end
 
 local files = {
 	'but.lua',
-	'bme.lua',
 	'breath.lua',
 	'cat.lua',
 	'finish_job.lua',
@@ -28,11 +27,11 @@ local files = {
 	'rc_timer.lua',
 	'rc_wifi.lua',
 	'run_config.lua',
-	'sensor_power.lua',
+	'sensor_bme.lua',
 	'sensor_light.lua',
+	'sensor_power.lua',
 	'sleep.lua',
 	'telnet.lua',
-	'tsl2561.lua',
 }
 
 for i, f in ipairs(files) do check_compile(f) end
