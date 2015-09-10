@@ -45,7 +45,7 @@ if flag_dsleep == false then
 	end)
 else
 	if r == 1 then
-		dofile("sleep.lc")(1000, 60000)
+		dofile("sleep.lc")(1000, 3600000)
 	else
 		print("button presssed, debug mode")
 	end
