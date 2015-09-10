@@ -19,7 +19,6 @@ end
 dofile("rc_timer.lc")
 dofile("rc_gpio.lc")
 
---dofile("but.lc")
 collectgarbage()
 
 local r = 0
@@ -40,12 +39,25 @@ if flag_dsleep == false then
 	tmr.alarm(tmr_work, 100, 1, function()
 		if (flag_wifi == true) then
 			tmr.stop(tmr_work)
-			dofile("work.lc")
+			dofile('breath.lc')
+			collectgarbage("collect")
+			print("heap:     "..node.heap())
+			print("mem used: "..collectgarbage('count'))
+			flag_telnet = false
+			flag_jobdone = false
+			dofile('telnet.lc')
+			dofile("rc_i2c.lc")
+			dofile('sensor_power.lc')
+			dofile('sensor_light.lc')
+			print("<free/used>: "..node.heap().."/"..collectgarbage('count'))
+			dofile('mqtt_job.lc')
+			dofile('finish_job.lc')
 		end
 	end)
 else
 	if r == 1 then
-		dofile("sleep.lc")(1000, 3600000)
+		--dofile("sleep.lc")(1000, 3600000)
+		dofile('but.lc')
 	else
 		print("button presssed, debug mode")
 	end

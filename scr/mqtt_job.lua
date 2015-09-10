@@ -1,40 +1,17 @@
 print("start mqtt job")
+print("<free/used>: "..node.heap().."/"..collectgarbage('count'))
 
--- power
---local RS = 20
-local ac = (256 * readRegister(0x55, 0x15) + readRegister(0x55, 0x14)) * 3.57 / 20
-local volt = 256 * readRegister(0x55, 0x09) + readRegister(0x55, 0x08)
-local temp = 0.25 * (256 * readRegister(0x55, 0x07) + readRegister(0x55, 0x06)) - 273.15
-local sae = (256 * readRegister(0x55, 0x23) + readRegister(0x55, 0x22)) * 29.2 / 20
-local tte = 256 * readRegister(0x55, 0x17) + readRegister(0x55, 0x16)
---print("average current in 5.12 sec: "..ac.." mA")
---print("battery voltage in 2.56 sec: "..volt.." mV")
---print("temperature in 2.56 sec: "..temp.." C")
---print("available entergy: "..sae.." mWh")
---print("time to empty: "..tte.." minutes")
-
--- light
-tsl2561 = require("tsl2561")
-tsl2561.init()
-local ch0, ch1 = tsl2561.readRaw()
-tsl2561 = nil
-package.loaded["tsl2561"] = nil
-collectgarbage()
-
-print("prepare data finished")
-
--- mqtt things
 local MQTT_ID         = "esp-"..node.chipid()
 local TOPIC_SUB       = "/down/neuron/"..MQTT_ID.."/#"
 local TOPIC_CHECKIN   = "/up/checkin/neuron"
-local TOPIC_FINISH    = "/up/finish/neuron"
-local TOPIC_PUB_LIGHT = "/up/neuron/"..MQTT_ID.."/light"
-local TOPIC_PUB_POWER = "/up/neuron/"..MQTT_ID.."/power"
+--local TOPIC_PUB_LIGHT = "/up/neuron/"..MQTT_ID.."/light"
+--local TOPIC_PUB_POWER = "/up/neuron/"..MQTT_ID.."/power"
 
 local putack_sum = 0
 local PUTACK_MAX = 3
 
 m = mqtt.Client(MQTT_ID, 120, nil, nil)
+print("m: "..tostring(m))
 
 m:on("connect", function(con)
 	print ("connected")
@@ -57,26 +34,39 @@ local function do_mqttpub(topic, msg)
 	end)
 end
 
+print("connect to mqtt server")
 m:connect("123.57.208.39", 1883, 0, function(conn)
 	print("connected")
+--	local buf = nil
 
 	do_mqttpub(TOPIC_CHECKIN, MQTT_ID)
-	collectgarbage()
-	do_mqttpub(TOPIC_PUB_POWER, ac.." "..volt.." "..temp.." "..sae.." "..tte)
-	collectgarbage()
-	do_mqttpub(TOPIC_PUB_LIGHT, ch0.." "..ch1)
-	collectgarbage()
+--[====[
+	if file.open("power.mqtt", "r") then
+		buf = file.readline()
+		do_mqttpub(TOPIC_PUB_POWER, buf)
+		file.close()
+	else
+		print("err open power.mqtt")
+	end
 
+	if file.open("light.mqtt", "r") then
+		buf = file.readline()
+		do_mqttpub(TOPIC_PUB_LIGHT, buf)
+		file.close()
+	else
+		print("err open power.mqtt")
+	end
+]====]
 	m:subscribe(TOPIC_SUB, 0, function(conn)
 		print("subscribe success")
 	end)
-	collectgarbage()
 end)
 
+print("start work timer")
 tmr.alarm(tmr_work, 100, 1, function()
 	if putack_sum >= PUTACK_MAX then
 		flag_jobdone = true
 		tmr.stop(tmr_work)
-		print("job done perfectly")
+		print("mqtt job done perfectly")
 	end
 end)

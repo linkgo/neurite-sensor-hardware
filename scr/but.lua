@@ -1,4 +1,4 @@
-local value = true
+local value = false
 local t = 0
 local dt = 0
 local r_curr = 1
