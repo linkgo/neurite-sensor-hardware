@@ -22,7 +22,6 @@ if file.open("config.lc") then
 			ledon = not ledon
 			if ledon == false then
 				led(1023)
-				print("connecting...")
 			else
 				led(512)
 			end

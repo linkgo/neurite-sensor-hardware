@@ -1,4 +1,5 @@
 flag_telnet = false
+flag_sensor = false
 flag_jobdone = false
 
 dofile("rc_timer.lc")
@@ -20,19 +21,20 @@ if flag_dsleep == false then
 		file.remove('config.lc')
 	end
 	collectgarbage()
-	dofile("rc_i2c.lc")
-	dofile('sensor_power.lc')
-	dofile('sensor_light.lc')
-	dofile('sensor_bme.lc')
 	dofile("rc_wifi.lc")
 	tmr.alarm(tmr_work, 100, 1, function()
-		if (flag_wifi == true) then
+		if flag_wifi == true and flag_sensor == true then
 			tmr.stop(tmr_work)
 			dofile('breath.lc')
 			dofile('telnet.lc')
 			dofile('mqtt_job.lc')
 		end
 	end)
+	dofile("rc_i2c.lc")
+	dofile('sensor_power.lc')
+	dofile('sensor_light.lc')
+	dofile('sensor_bme.lc')
+	flag_sensor = true
 else
 	if r == 1 then
 		dofile("sleep.lc")(1000, 3600000)
