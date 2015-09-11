@@ -38,16 +38,16 @@ if flag_dsleep == false then
 		file.remove('config.lc')
 	end
 	collectgarbage()
+	dofile("rc_i2c.lc")
+	dofile('sensor_power.lc')
+	dofile('sensor_light.lc')
+	dofile('sensor_bme.lc')
 	dofile("rc_wifi.lc")
 	tmr.alarm(tmr_work, 100, 1, function()
 		if (flag_wifi == true) then
 			tmr.stop(tmr_work)
 			dofile('breath.lc')
 			dofile('telnet.lc')
-			dofile("rc_i2c.lc")
-			--dofile('sensor_power.lc')
-			--dofile('sensor_light.lc')
-			--dofile('sensor_bme.lc')
 			dofile('mqtt_job.lc')
 		end
 	end)
