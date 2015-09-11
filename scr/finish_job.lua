@@ -1,7 +1,7 @@
 local cnt = 0
 tmr.alarm(tmr_com, 1000, 1, function()
 	cnt = cnt + 1
-	if flag_jobdone == true or cnt >= 300 then
+	if flag_jobdone == true or cnt >= 30 then
 		tmr.stop(tmr_com)
 		if flag_jobdone == false then
 			print("warining: sleep without job done!")
