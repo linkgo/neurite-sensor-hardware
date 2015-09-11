@@ -1,24 +1,6 @@
-print("Hi linkgo.io!")
-print("sta mac:  "..wifi.sta.getmac())
-print("ap mac:   "..wifi.ap.getmac())
-print("chip:     "..node.chipid())
-print("heap:     "..node.heap())
-print("mem used: "..collectgarbage('count'))
-
 flag_telnet = false
 flag_jobdone = false
 
-if file.open('rc_compile.lua') then
-	file.close()
-	print('Compiling:', 'rc_compile.lua')
-	node.compile('rc_compile.lua')
-	file.remove('rc_compile.lua')
-	collectgarbage()
-end
--- comment out this line to save time once files have been compiled
-if file.open('rc_compile.lc') then
-	dofile("rc_compile.lc")
-end
 dofile("rc_timer.lc")
 dofile("rc_gpio.lc")
 
