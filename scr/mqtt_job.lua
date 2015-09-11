@@ -6,7 +6,6 @@ local putack_sum = 0
 local PUTACK_MAX = 4
 
 m = mqtt.Client(MQTT_ID, 120, nil, nil)
-print("m: "..tostring(m))
 
 m:on("connect", function(con)
 	print ("connected")
@@ -29,7 +28,6 @@ local function do_mqttpub(topic, msg)
 	end)
 end
 
-print("connect to mqtt server")
 m:connect("123.57.208.39", 1883, 0, function(conn)
 	print("connected")
 	local buf = nil
@@ -65,7 +63,6 @@ m:connect("123.57.208.39", 1883, 0, function(conn)
 	end)
 end)
 
-print("start work timer")
 tmr.alarm(tmr_work, 100, 1, function()
 	if putack_sum >= PUTACK_MAX then
 		flag_jobdone = true
@@ -73,4 +70,3 @@ tmr.alarm(tmr_work, 100, 1, function()
 		print("mqtt job done perfectly")
 	end
 end)
-print("<free/used>: "..node.heap().."/"..collectgarbage('count'))

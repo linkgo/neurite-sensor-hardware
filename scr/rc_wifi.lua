@@ -1,7 +1,5 @@
 print("# config wifi")
-
-print("heap:     "..node.heap())
-print("mem used: "..collectgarbage('count'))
+print("<free/used>: "..node.heap().."/"..collectgarbage('count'))
 
 flag_wifi = false
 
