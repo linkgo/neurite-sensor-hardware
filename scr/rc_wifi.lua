@@ -4,7 +4,6 @@ print("heap:     "..node.heap())
 print("mem used: "..collectgarbage('count'))
 
 flag_wifi = false
-local timeout = 10000
 
 if file.open("config.lc") then
 	file.close()
@@ -31,12 +30,11 @@ if file.open("config.lc") then
 			flag_wifi = true
 		end
 	end)
-	tmr.alarm(tmr_com, timeout, 0, function()
+	tmr.alarm(tmr_com, 20000, 0, function()
 		if flag_wifi == false then
 			tmr.stop(tmr_wifi)
-			print("fail to connect, start softap")
-			collectgarbage()
-			dofile("run_config.lc")
+			print("fail to connect, try at next wake up")
+			dofile("sleep.lc")(1000, 300000)
 		end
 	end)
 else
