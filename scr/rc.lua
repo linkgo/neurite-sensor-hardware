@@ -28,6 +28,7 @@ if flag_dsleep == false then
 			dofile('breath.lc')
 			dofile('telnet.lc')
 			dofile('mqtt_job.lc')
+			dofile('finish_job.lc')
 		end
 	end)
 	dofile("rc_i2c.lc")

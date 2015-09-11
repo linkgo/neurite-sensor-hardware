@@ -9,7 +9,7 @@ tmr.alarm(tmr_com, 1000, 1, function()
 		if flag_telnet == true then
 			print("telnet connected, ignore sleep")
 		else
-			dofile("sleep.lc")(1000, 10000)
+			dofile("sleep.lc")(1000, 300000)
 		end
 	end
 end)
