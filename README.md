@@ -9,7 +9,7 @@ Originally we use nodemcu lua scripts until we were hardly able to work around t
 
 ## Demo
 
-As a demo scenario, we put some modules in our office, collecting realtime data.
+As a demo scenario, we put some modules in our office, collecting realtime data.  
 Jump: [lab of linkgo.io](http://lab.linkgo.io)
 
 ## License
