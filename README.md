@@ -2,8 +2,8 @@
 
 # Neurite Sensor
 
-The sensor hardware based on esp8266 powered by [Neurite](https://github.com/linkgo/neurite) firmware.
-Originally we use nodemcu lua scripts until we were hardly able to work around the memroy issues.
+The sensor hardware based on esp8266 powered by [Neurite](https://github.com/linkgo/neurite) firmware.  
+Originally we use nodemcu lua scripts until we were hardly able to work around the memory issues.
 
 ![neurite-sensor-hardware-brd-w](https://github.com/linkgo/neurite-sensor-hardware/blob/master/project/neurite-sensor-hardware-brd-w.png)
 
